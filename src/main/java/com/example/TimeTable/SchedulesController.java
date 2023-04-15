@@ -1,6 +1,8 @@
 package com.example.TimeTable;
 
 import javafx.collections.FXCollections;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +11,11 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,6 +33,7 @@ import javafx.scene.control.TableRow;
 
 
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 
 public class SchedulesController {
@@ -51,11 +58,15 @@ public class SchedulesController {
     private Button exitBtn;
     @FXML
     private TableView<Schedules> table;
-    private TableColumn <Schedules,String> tid;
+    @FXML
     private TableColumn <Schedules,String> tsubject;
+    @FXML
     private TableColumn <Schedules,String> tdate;
+    @FXML
     private TableColumn <Schedules,String> ttime;
+    @FXML
     private TableColumn <Schedules,String> tlecturer;
+    @FXML
     private TableColumn <Schedules,String> tstudents;
 
 
@@ -77,78 +88,6 @@ public class SchedulesController {
                 );
         timeBox.setItems(options2);
 
-        table();
-
-
-    }
-
-    @FXML
-    public void Add(ActionEvent event) {
-        String subject, date, time, lecturer, students;
-        subject = sbjCodeBox.getText();
-        date = dateBox.getValue();
-        time = timeBox.getValue();
-        lecturer = lecBox.getText();
-        students = studentBox.getText();
-        try {
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection();
-            Statement statement = connectDB.createStatement();
-            String insertQuery = "INSERT INTO schedules_table (subject, date, time, lecturer, no_students) VALUES ('" +
-                    subject + "', '" + date + "', '" + time + "', '" + lecturer + "', '" + students + "')";
-            statement.executeUpdate(insertQuery);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Schedule Added");
-            alert.setHeaderText(null);
-            alert.setContentText("Schedule has been added successfully!");
-            alert.showAndWait();
-
-            table();
-
-            sbjCodeBox.setText("");
-            studentBox.setText("");
-            lecBox.setText("");
-        }
-     catch (Exception e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("An error occurred while adding schedule! Please try again.");
-        alert.showAndWait();
-        e.printStackTrace();
-    }
-}
-    @FXML
-    public void table() {
-
-        ObservableList<Schedules> schedules = FXCollections.observableArrayList();
-        try {
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection();
-
-            String query = "SELECT * FROM schedules_table";
-            PreparedStatement statement = connectDB.prepareStatement(query);
-            ResultSet rs = statement.executeQuery(query);
-            while (rs.next()) {
-                Schedules schedule = new Schedules();
-                schedule.setId(rs.getString("id"));
-                schedule.setSubject(rs.getString("subject"));
-                schedule.setDate(rs.getString("date"));
-                schedule.setTime(rs.getString("time"));
-                schedule.setLecturer(rs.getString("lecturer"));
-                schedule.setNoStudents(rs.getString("no_students"));
-                schedules.add(schedule);
-            }
-            table.setItems(schedules);
-            tid.setCellValueFactory(f -> f.getValue().idProperty());
-            tsubject.setCellValueFactory(f -> f.getValue().subjectProperty());
-            tdate.setCellValueFactory(f -> f.getValue().dateProperty());
-            ttime.setCellValueFactory(f -> f.getValue().timeProperty());
-            tlecturer.setCellValueFactory(f -> f.getValue().lecturerProperty());
-            tstudents.setCellValueFactory(f -> f.getValue().noStudentsProperty());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         table.setRowFactory(tv -> {
             TableRow<Schedules> myRow = new TableRow<>();
             myRow.setOnMouseClicked(event -> {
@@ -163,74 +102,180 @@ public class SchedulesController {
             });
             return myRow;
         });
+
+
+
+
+        table();
+
+
     }
 
-
     @FXML
-    void Delete(ActionEvent event) {
-        int myIndex = table.getSelectionModel().getSelectedIndex();
-        int id = Integer.parseInt(String.valueOf(table.getItems().get(myIndex).getId()));
+    private void table() {
+        tsubject.setCellValueFactory(data -> data.getValue().subjectProperty());
+        tdate.setCellValueFactory(data -> data.getValue().dateProperty());
+        ttime.setCellValueFactory(data -> data.getValue().timeProperty());
+        tlecturer.setCellValueFactory(data -> data.getValue().lecturerProperty());
+        tstudents.setCellValueFactory(data -> data.getValue().noStudentsProperty());
 
+        ObservableList<Schedules> observableList = FXCollections.observableArrayList();
         try {
             DatabaseConnection connectNow = new DatabaseConnection();
             Connection connectDB = connectNow.getConnection();
-            PreparedStatement pst = connectDB.prepareStatement("delete from schedules_table where id = ?");
-            pst.setInt(1, id);
+            PreparedStatement pst = connectDB.prepareStatement("SELECT * FROM schedules_table");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Schedules schedule = new Schedules();
+                schedule.setSubject(rs.getString("subject"));
+                schedule.setDate(rs.getString("date"));
+                schedule.setTime(rs.getString("time"));
+                schedule.setLecturer(rs.getString("lecturer"));
+                schedule.setNoStudents(rs.getString("no_students"));
+                observableList.add(schedule);
+            }
+            table.setItems(observableList);
+
+        }catch (SQLException ex) {
+            Logger.getLogger(ClassroomsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void Add(ActionEvent event) {
+        String ssubjectBox, sdateBox, stimeBox, slectBox, sstudentsBox;
+        ssubjectBox = sbjCodeBox.getText();
+        sdateBox = dateBox.getValue();
+        stimeBox = timeBox.getValue();
+        slectBox = lecBox.getText();
+        sstudentsBox = studentBox.getText();
+        try {
+            DatabaseConnection connectNow = new DatabaseConnection();
+            Connection connectDB = connectNow.getConnection();
+            PreparedStatement pst = connectDB.prepareStatement("INSERT INTO schedules_table(subject,date,time,lecturer,no_students) VALUES (?,?,?,?,?)");
+            pst.setString(1, ssubjectBox);
+            pst.setString(2, sdateBox);
+            pst.setString(3, stimeBox);
+            pst.setString(4, slectBox);
+            pst.setString(5, sstudentsBox);
             pst.executeUpdate();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Student Registration");
-            alert.setHeaderText("Student Registration");
-            alert.setContentText("Deleted!");
-            alert.showAndWait();
-            table();
-        } catch (SQLException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void Update(ActionEvent event) {
-        try {
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection();
-            int myIndex = table.getSelectionModel().getSelectedIndex();
-            int id = Integer.parseInt(String.valueOf(table.getItems().get(myIndex).getId()));
-            String subject = sbjCodeBox.getText();
-            String date = dateBox.getValue();
-            String time = timeBox.getValue();
-            String lecturer = lecBox.getText();
-            String students = studentBox.getText();
-
-            String query = "UPDATE schedules_table SET subject = ?, date = ?, time = ?, lecturer = ?, no_students = ? WHERE id = ?";
-            PreparedStatement statement = connectDB.prepareStatement(query);
-            statement.setString(1, subject);
-            statement.setString(2, date);
-            statement.setString(3, time);
-            statement.setString(4, lecturer);
-            statement.setString(5, students);
-            statement.setInt(6, id);
-            statement.executeUpdate();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Schedule Updated");
-            alert.setHeaderText(null);
-            alert.setContentText("Schedule has been updated successfully!");
+            alert.setTitle("Schedule Registration");
+            alert.setHeaderText("Schedule Registration");
+            alert.setContentText("Record added successfully!");
             alert.showAndWait();
 
             table();
+
             sbjCodeBox.setText("");
-            studentBox.setText("");
+            dateBox.setValue(null);
+            timeBox.setValue(null);
             lecBox.setText("");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("An error occurred while updating schedule! Please try again.");
-            alert.showAndWait();
+            studentBox.setText("");
+
+            sbjCodeBox.requestFocus();
+            table();
+        }
+
+        catch (SQLException ex) {
+            Logger.getLogger(SchedulesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    @FXML
+    void Update(ActionEvent event) throws SQLException {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+            String ssubjectBox, sdateBox, stimeBox, slectBox, sstudentsBox;
+            ssubjectBox = sbjCodeBox.getText();
+            sdateBox = dateBox.getValue();
+            stimeBox = timeBox.getValue();
+            slectBox = lecBox.getText();
+            sstudentsBox = studentBox.getText();
+
+            Statement stmt = connectDB.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id FROM schedules_table");
+
+            int id = 0;
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+            try {
+
+                PreparedStatement pst = connectDB.prepareStatement("UPDATE schedules_table SET subject = ?, date = ?, time = ?, lecturer = ?, no_students = ? WHERE id = ?");
+                pst.setString(1, ssubjectBox);
+                pst.setString(2, sdateBox);
+                pst.setString(3, stimeBox);
+                pst.setString(4, slectBox);
+                pst.setString(5, sstudentsBox);
+                pst.setInt(6, id);
+                pst.executeUpdate();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Schedule Update");
+                alert.setHeaderText("Schedule Update");
+                alert.setContentText("Record updated successfully!");
+                alert.showAndWait();
+
+                table();
+
+                sbjCodeBox.setText("");
+                dateBox.setValue(null);
+                timeBox.setValue(null);
+                lecBox.setText("");
+                studentBox.setText("");
+
+                sbjCodeBox.requestFocus();
+                table();
+            }
+
+            catch (SQLException ex) {
+                Logger.getLogger(SchedulesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+    }
+
+    @FXML
+    void Delete(ActionEvent event) {
+
+            try {
+                DatabaseConnection connectNow = new DatabaseConnection();
+                Connection connectDB = connectNow.getConnection();
+
+                String subject= table.getSelectionModel().getSelectedItem().getSubject();
+                PreparedStatement pst = connectDB.prepareStatement("DELETE FROM schedules_table WHERE subject = ?");
+                pst.setString(1, subject);
+                pst.executeUpdate();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Schedule Deletion");
+                alert.setHeaderText("Schedule Deletion");
+                alert.setContentText("Record deleted successfully!");
+                alert.showAndWait();
+
+                table();
+            }
+
+            catch (SQLException ex) {
+                Logger.getLogger(SchedulesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+    }
+
+    @FXML
+    public void Exit(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+        Stage dashboard = new Stage();
+        dashboard.setScene(new Scene(root));
+        dashboard.show();
+
+        // Close the current window
+        Stage currentWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentWindow.close();
+    }
 
 
 }
+
+

@@ -54,23 +54,23 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="addBtn" onAction="#Add" layoutX="88.0" layoutY="385.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" style="-fx-background-color: #3388ff; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="ADD">
+            <Button fx:id="addBtn" layoutX="88.0" layoutY="385.0" mnemonicParsing="false" onAction="#Add" prefHeight="38.0" prefWidth="80.0" style="-fx-background-color: #3388ff; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="ADD">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="updateBtn" onAction="#Update" layoutX="191.0" layoutY="386.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" style="-fx-background-color: #3388ff; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="UPDATE">
+            <Button fx:id="updateBtn" layoutX="191.0" layoutY="386.0" mnemonicParsing="false" onAction="#Update" prefHeight="38.0" prefWidth="80.0" style="-fx-background-color: #3388ff; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="UPDATE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="deleteBtn" onAction="#Delete" layoutX="293.0" layoutY="386.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" style="-fx-background-color: #ff4747; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="DELETE">
+            <Button fx:id="deleteBtn" layoutX="293.0" layoutY="386.0" mnemonicParsing="false" onAction="#Delete" prefHeight="38.0" prefWidth="80.0" style="-fx-background-color: #ff4747; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="DELETE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <ComboBox fx:id="dateBox" layoutX="174.0" layoutY="195.0" prefHeight="26.0" prefWidth="198.0" promptText="Select Time" />
-            <Button fx:id="exitBtn" layoutX="89.0" layoutY="441.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="284.0" style="-fx-background-color: #ff4747; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="EXIT">
+            <ComboBox fx:id="dateBox" layoutX="174.0" layoutY="195.0" prefHeight="26.0" prefWidth="198.0" promptText="Select Day" />
+            <Button fx:id="exitBtn" layoutX="89.0" layoutY="441.0" mnemonicParsing="false" onAction="#Exit" prefHeight="38.0" prefWidth="284.0" style="-fx-background-color: #ff4747; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="EXIT">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
