@@ -49,8 +49,11 @@ public class ResourcesContrller {
     @FXML
     private TableColumn <Resources,String> tprojectors;
 
+    @FXML
     private TextField classroomBox;
+    @FXML
     private TextField whiteboardBox;
+    @FXML
     private TextField projectorBox;
 
     public void initialize() {
@@ -81,11 +84,11 @@ public class ResourcesContrller {
         try {
             DatabaseConnection connectNow = new DatabaseConnection();
             Connection connectDB = connectNow.getConnection();
-            PreparedStatement pst = connectDB.prepareStatement("SELECT * FROM resources_table");
+            PreparedStatement pst = connectDB.prepareStatement("SELECT * FROM resource_table");
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Resources resource = new Resources();
-                resource.setCname(rs.getString("cname"));
+                resource.setCname(rs.getString("class_name"));
                 resource.setWhiteboards(rs.getString("whiteboards"));
                 resource.setProjectors(rs.getString("projectors"));
                 observableList.add(resource);
@@ -106,7 +109,7 @@ public class ResourcesContrller {
         try {
             DatabaseConnection connectNow = new DatabaseConnection();
             Connection connectDB = connectNow.getConnection();
-            PreparedStatement pst = connectDB.prepareStatement("INSERT INTO resources_table(cname,whiteboards,projectors) VALUES (?,?,?)");
+            PreparedStatement pst = connectDB.prepareStatement("INSERT INTO resource_table(class_name,whiteboards,projectors) VALUES (?,?,?)");
             pst.setString(1, cnameBox);
             pst.setString(2, whiteboardsBox);
             pst.setString(3, projectorsBox);
@@ -134,20 +137,28 @@ public class ResourcesContrller {
     }
 
     @FXML
-    void update(ActionEvent event) {
-        Resources selectedResource = table.getSelectionModel().getSelectedItem();
-        if (selectedResource != null) {
+    void Update(ActionEvent event) {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
             String cnameBox = classroomBox.getText();
             String whiteboardsBox = whiteboardBox.getText();
             String projectorsBox = projectorBox.getText();
             try {
-                DatabaseConnection connectNow = new DatabaseConnection();
-                Connection connectDB = connectNow.getConnection();
-                PreparedStatement pst = connectDB.prepareStatement("UPDATE resources_table SET cname=?, whiteboards=?, projectors=? WHERE id=?");
+
+                Statement stmt = connectDB.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT id FROM resource_table");
+
+                int id = 0;
+                if (rs.next()) {
+                    id = rs.getInt("id");
+                }
+
+                PreparedStatement pst = connectDB.prepareStatement("UPDATE resource_table SET class_name=?, whiteboards=?, projectors=? WHERE id=?");
                 pst.setString(1, cnameBox);
                 pst.setString(2, whiteboardsBox);
                 pst.setString(3, projectorsBox);
-                pst.setInt(4, selectedResource.getId());
+                pst.setInt(4, id);
                 pst.executeUpdate();
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -167,27 +178,24 @@ public class ResourcesContrller {
             } catch (SQLException ex) {
                 Logger.getLogger(ResourcesContrller.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No resource selected");
-            alert.setHeaderText("No resource selected");
-            alert.setContentText("Please select a resource to update.");
-            alert.showAndWait();
-        }
+
     }
 
     @FXML
     void Delete(ActionEvent event) {
-        Resources selectedResource = table.getSelectionModel().getSelectedItem();
 
-        if (selectedResource != null) {
+
             try {
 
                 DatabaseConnection connectNow = new DatabaseConnection();
                 Connection connectDB = connectNow.getConnection();
 
-                PreparedStatement pst = connectDB.prepareStatement("DELETE FROM resources_table WHERE cname = ?");
-                pst.setString(1, selectedResource.getCname());
+                String name = table.getSelectionModel().getSelectedItem().getCname();
+
+
+
+                PreparedStatement pst = connectDB.prepareStatement("DELETE FROM resource_table WHERE class_name = ?");
+                pst.setString(1, name);
                 pst.executeUpdate();
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -206,13 +214,19 @@ public class ResourcesContrller {
             } catch (SQLException ex) {
                 Logger.getLogger(ResourcesContrller.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No resource selected");
-            alert.setContentText("Please select a resource to delete.");
-            alert.showAndWait();
-        }
+
+    }
+
+    @FXML
+    public void Exit(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+        Stage dashboard = new Stage();
+        dashboard.setScene(new Scene(root));
+        dashboard.show();
+
+        // Close the current window
+        Stage currentWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentWindow.close();
     }
 
 

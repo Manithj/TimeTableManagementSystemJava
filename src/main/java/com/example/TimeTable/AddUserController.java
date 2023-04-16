@@ -15,10 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 
 public class AddUserController {
@@ -48,6 +45,31 @@ public class AddUserController {
                         "User"
                 );
         accType.setItems(options);
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String verifyLogin = "SELECT * FROM user_account WHERE Acc_Type = 'User'";
+
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(verifyLogin);
+
+            if (queryResult.next()) {
+
+                addBtn.setVisible(false);
+            } else {
+                System.out.println("");
+            }
+
+            queryResult.close();
+            statement.close();
+            connectDB.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addBtnAction(ActionEvent event){
@@ -65,7 +87,7 @@ public class AddUserController {
         dashboard.setScene(new Scene(root2));
         dashboard.show();
 
-        // Close the current window
+
         Stage currentWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentWindow.close();
 
@@ -80,13 +102,13 @@ public class AddUserController {
         String password = passwordBox.getText();
         String accTypes = accType.getValue();
 
-// Validate input fields
+
         if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || password.isEmpty() || accTypes.isEmpty()) {
             label.setText("Please fill in all fields");
             return;
         }
 
-// Use prepared statement to insert user data into database
+
         String query = "INSERT INTO user_account(first_name, lastname, username, password, Acc_Type) VALUES (?, ?, ?, ?, ?)";
 
         try {

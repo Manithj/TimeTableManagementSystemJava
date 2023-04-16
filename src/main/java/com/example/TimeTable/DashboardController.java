@@ -26,6 +26,22 @@ public class DashboardController {
     @FXML
     private Button SignOutBtn;
 
+
+    @FXML
+    public void ResourcesBtnAction(ActionEvent event){
+        try {
+            Parent root6 = FXMLLoader.load(getClass().getResource("Resources.fxml"));
+            Stage dashboard4 = new Stage();
+            dashboard4.setScene(new Scene(root6));
+            dashboard4.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        Stage currentWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentWindow.close();
+    }
     @FXML
     public void ClassroomBtnAction(ActionEvent event){
         try {
@@ -65,7 +81,7 @@ public class DashboardController {
         dashboard.setScene(new Scene(root));
         dashboard.show();
 
-        // Close the current window
+
         Stage currentWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentWindow.close();
     }
@@ -77,7 +93,7 @@ public class DashboardController {
         dashboard1.setScene(new Scene(root1));
         dashboard1.show();
 
-        // Close the current window
+
         Stage currentWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentWindow.close();
     }
