@@ -14,6 +14,7 @@ public class Login extends javafx.application.Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Time Table Management System");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

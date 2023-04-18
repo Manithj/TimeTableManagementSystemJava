@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import javafx.stage.StageStyle;
 import javafx.scene.Parent;
 
 import java.sql.Connection;
@@ -20,10 +19,10 @@ public class LoginController {
     @FXML
     private Label welcomeText;
     @FXML
-    private TextField usernameBox;
+    static private TextField usernameBox;
 
     @FXML
-    private TextField passwordBox;
+    static private TextField passwordBox;
     @FXML
     private Label loginLbl;
 
@@ -91,6 +90,7 @@ public class LoginController {
             Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
             Stage dashboard = new Stage();
             dashboard.setScene(new Scene(root));
+            dashboard.setResizable(false);
             dashboard.show();
         }catch (Exception e) {
             e.printStackTrace();

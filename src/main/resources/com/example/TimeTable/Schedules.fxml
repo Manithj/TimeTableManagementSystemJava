@@ -81,12 +81,11 @@
          <children>
             <TableView fx:id="table" layoutX="8.0" layoutY="84.0" prefHeight="378.0" prefWidth="495.0">
               <columns>
-                  <TableColumn fx:id="tid" prefWidth="40.00006103515625" text="ID" />
-                <TableColumn fx:id="tsubject" prefWidth="79.20001220703125" text="Subject" />
-                <TableColumn fx:id="tdate" prefWidth="68.0" text="Date" />
-                  <TableColumn fx:id="ttime" prefWidth="81.60003662109375" text="Time" />
-                  <TableColumn fx:id="tlecturer" minWidth="0.0" prefWidth="147.199951171875" text="Lecturer" />
-                  <TableColumn fx:id="tstudents" prefWidth="78.4000244140625" text="No Stu" />
+                <TableColumn fx:id="tsubject" prefWidth="94.4000244140625" text="Subject" />
+                <TableColumn fx:id="tdate" prefWidth="76.79998779296875" text="Date" />
+                  <TableColumn fx:id="ttime" prefWidth="77.5999755859375" text="Time" />
+                  <TableColumn fx:id="tlecturer" minWidth="0.0" prefWidth="155.199951171875" text="Lecturer" />
+                  <TableColumn fx:id="tstudents" prefWidth="92.7999267578125" text="No Students" />
               </columns>
             </TableView>
          </children>

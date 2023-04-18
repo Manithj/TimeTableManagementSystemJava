@@ -46,30 +46,7 @@ public class AddUserController {
                 );
         accType.setItems(options);
 
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getConnection();
 
-        String verifyLogin = "SELECT * FROM user_account WHERE Acc_Type = 'User'";
-
-
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(verifyLogin);
-
-            if (queryResult.next()) {
-
-                addBtn.setVisible(false);
-            } else {
-                System.out.println("");
-            }
-
-            queryResult.close();
-            statement.close();
-            connectDB.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void addBtnAction(ActionEvent event){

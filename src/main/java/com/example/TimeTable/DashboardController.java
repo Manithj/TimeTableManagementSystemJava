@@ -11,6 +11,9 @@ import javafx.scene.Node;
 
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class DashboardController {
     @FXML
@@ -27,12 +30,43 @@ public class DashboardController {
     private Button SignOutBtn;
 
 
+
+    public void initialize() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+
+        String verifyLogin = "SELECT * FROM user_account WHERE  Acc_Type = 'Admin'";
+
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(verifyLogin);
+
+            if (queryResult.next()) {
+
+                //AddUserBtn.setVisible(false);
+            } else {
+                System.out.println("");
+            }
+
+            queryResult.close();
+            statement.close();
+            connectDB.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
     @FXML
     public void ResourcesBtnAction(ActionEvent event){
         try {
             Parent root6 = FXMLLoader.load(getClass().getResource("Resources.fxml"));
             Stage dashboard4 = new Stage();
             dashboard4.setScene(new Scene(root6));
+            dashboard4.setResizable(false);
             dashboard4.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,6 +83,7 @@ public class DashboardController {
             Stage dashboard3 = new Stage();
             dashboard3.setScene(new Scene(root5));
             dashboard3.show();
+            dashboard3.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,6 +99,7 @@ public class DashboardController {
             Parent root3 = FXMLLoader.load(getClass().getResource("Schedules.fxml"));
             Stage dashboard2 = new Stage();
             dashboard2.setScene(new Scene(root3));
+            dashboard2.setResizable(false);
             dashboard2.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,6 +115,7 @@ public class DashboardController {
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         Stage dashboard = new Stage();
         dashboard.setScene(new Scene(root));
+        dashboard.setResizable(false);
         dashboard.show();
 
 
@@ -91,6 +128,7 @@ public class DashboardController {
         Parent root1 = FXMLLoader.load(getClass().getResource("AddUser.fxml"));
         Stage dashboard1 = new Stage();
         dashboard1.setScene(new Scene(root1));
+        dashboard1.setResizable(false);
         dashboard1.show();
 
 
