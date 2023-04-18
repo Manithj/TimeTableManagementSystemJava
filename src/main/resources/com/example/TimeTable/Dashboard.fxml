@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.TimeTable.DashboardController">
+   <children>
+      <AnchorPane layoutY="103.0" prefHeight="297.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="445.0" fitWidth="602.0" layoutY="-104.0" pickOnBounds="true">
+               <image>
+                  <Image url="file:/C:/Users/Manith/IdeaProjects/demo/src/img/5f6e93d250a6d04f4eae9f02_Backgrounds-WFU-thumbnail-(size).jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="SchedulesBtn" alignment="CENTER_RIGHT" layoutX="107.0" layoutY="55.0" mnemonicParsing="false" onAction="#SchedulesBtnAction" prefHeight="54.0" prefWidth="136.0" style="-fx-background-color: #ffe800; -fx-border-color: #664229; -fx-background-radius: 10px; -fx-border-radius: 10px;" text="Schedules">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="SignOutBtn" layoutX="470.0" layoutY="289.0" mnemonicParsing="false" onAction="#SignOutBtnAction" prefHeight="13.0" prefWidth="66.0" style="-fx-background-color: #3388ff; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="Sign out" textFill="WHITE" />
+            <Button fx:id="AddUserBtn" layoutX="75.0" layoutY="289.0" mnemonicParsing="false" onAction="#AddUserBtnAction" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #ff4747; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="Add New User" textFill="WHITE" />
+            <Button fx:id="ResourcesBtn" alignment="CENTER_RIGHT" layoutX="233.0" layoutY="158.0" mnemonicParsing="false" onAction="#ResourcesBtnAction" prefHeight="54.0" prefWidth="136.0" style="-fx-background-color: #ffe800; -fx-border-color: #664229; -fx-background-radius: 10px; -fx-border-radius: 10px;" text="Resources">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="ClassroomBtn" alignment="CENTER_RIGHT" layoutX="334.0" layoutY="55.0" mnemonicParsing="false" onAction="#ClassroomBtnAction" prefHeight="54.0" prefWidth="136.0" style="-fx-background-color: #ffe800; -fx-border-color: #664229; -fx-background-radius: 10px; -fx-border-radius: 10px;" text="Classrooms">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="131.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Manith/IdeaProjects/demo/src/img/icons8-calender-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="356.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Manith/IdeaProjects/demo/src/img/icons8-classroom-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="259.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Manith/IdeaProjects/demo/src/img/icons8-resources-64.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="1.0" prefHeight="102.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="208.0" layoutY="34.0" text="Dashboard">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
