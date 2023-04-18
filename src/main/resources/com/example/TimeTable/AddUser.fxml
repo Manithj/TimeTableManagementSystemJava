@@ -23,7 +23,7 @@
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <Label fx:id="label" layoutX="107.0" layoutY="76.0" text="User Added Successfully" textFill="#fff600">
+            <Label fx:id="label" layoutX="107.0" layoutY="76.0" text="Press ADD to add User" textAlignment="CENTER" textFill="#fff600">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>
@@ -68,12 +68,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="addBtn" onAction="#addBtnAction" layoutX="40.0" layoutY="280.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="123.0" style="-fx-background-color: #3388ff; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="Add">
+            <Button fx:id="addBtn" layoutX="40.0" layoutY="280.0" mnemonicParsing="false" onAction="#addBtnAction" prefHeight="40.0" prefWidth="123.0" style="-fx-background-color: #3388ff; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="Add">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="exitBtn"  layoutX="175.0" layoutY="280.0" mnemonicParsing="false" onAction="#exitBtnAction" prefHeight="40.0" prefWidth="123.0" style="-fx-background-color: #ff4747; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="Exit">
+            <Button fx:id="exitBtn" layoutX="175.0" layoutY="280.0" mnemonicParsing="false" onAction="#exitBtnAction" prefHeight="40.0" prefWidth="123.0" style="-fx-background-color: #ff4747; -fx-border-color: #664229; -fx-background-radius: 15px; -fx-border-radius: 15px;" text="Exit">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

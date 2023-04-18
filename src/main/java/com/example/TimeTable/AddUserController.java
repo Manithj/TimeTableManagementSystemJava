@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -62,6 +63,8 @@ public class AddUserController {
         Parent root2 = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Stage dashboard = new Stage();
         dashboard.setScene(new Scene(root2));
+        dashboard.getIcons().add(new Image("file:src/img/classroom.png"));
+        dashboard.setTitle("Dashboard");
         dashboard.show();
 
 
