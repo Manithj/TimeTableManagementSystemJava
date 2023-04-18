@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -67,6 +68,8 @@ public class DashboardController {
             Stage dashboard4 = new Stage();
             dashboard4.setScene(new Scene(root6));
             dashboard4.setResizable(false);
+            dashboard4.setTitle("Resources");
+            dashboard4.getIcons().add(new Image("file:src/img/classroom.png"));
             dashboard4.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,6 +85,8 @@ public class DashboardController {
             Parent root5 = FXMLLoader.load(getClass().getResource("Classrooms.fxml"));
             Stage dashboard3 = new Stage();
             dashboard3.setScene(new Scene(root5));
+            dashboard3.setTitle("Classrooms");
+            dashboard3.getIcons().add(new Image("file:src/img/classroom.png"));
             dashboard3.show();
             dashboard3.setResizable(false);
         } catch (IOException e) {
@@ -100,6 +105,8 @@ public class DashboardController {
             Stage dashboard2 = new Stage();
             dashboard2.setScene(new Scene(root3));
             dashboard2.setResizable(false);
+            dashboard2.setTitle("Schedules");
+            dashboard2.getIcons().add(new Image("file:src/img/classroom.png"));
             dashboard2.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,6 +123,8 @@ public class DashboardController {
         Stage dashboard = new Stage();
         dashboard.setScene(new Scene(root));
         dashboard.setResizable(false);
+        dashboard.getIcons().add(new Image("file:src/img/classroom.png"));
+        dashboard.setTitle("Login");
         dashboard.show();
 
 
@@ -129,6 +138,8 @@ public class DashboardController {
         Stage dashboard1 = new Stage();
         dashboard1.setScene(new Scene(root1));
         dashboard1.setResizable(false);
+        dashboard1.getIcons().add(new Image("file:src/img/classroom.png"));
+        dashboard1.setTitle("AddUser");
         dashboard1.show();
 
 

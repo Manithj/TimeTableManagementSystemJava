@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableRow;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class ClassroomsController {
@@ -245,6 +246,8 @@ public class ClassroomsController {
         Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Stage dashboard = new Stage();
         dashboard.setScene(new Scene(root));
+        dashboard.getIcons().add(new Image("file:src/img/classroom.png"));
+        dashboard.setTitle("Dashboard");
         dashboard.show();
 
         // Close the current window

@@ -25,6 +25,7 @@ import javafx.scene.control.TableRow;
 
 
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -260,6 +261,8 @@ public class SchedulesController {
         Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Stage dashboard = new Stage();
         dashboard.setScene(new Scene(root));
+        dashboard.setTitle("Dashboard");
+        dashboard.getIcons().add(new Image("file:src/img/classroom.png"));
         dashboard.show();
 
         // Close the current window
